@@ -1,0 +1,7 @@
+#!/bin/zsh -eu
+
+cd $0:h/httpd
+pwd
+CPP='cc -E' CC=clang ./configure --with-included-apr --prefix=/usr/local/apache2
+make
+make install
