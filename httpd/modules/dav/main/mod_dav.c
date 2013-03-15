@@ -2012,6 +2012,18 @@ static int dav_method_propfind(request_rec *r)
     if (err != NULL)
         return dav_handle_err(r, err, NULL);
 
+    err = dav_validate_request(r, resource, 0, NULL,
+                               &multi_status, DAV_VALIDATE_RESOURCE, NULL);
+    if (err != NULL) {
+        err = dav_push_error(r->pool, err->status, 0,
+                             apr_psprintf(r->pool,
+                                          "Could not PROPFIND %s due to a failed "
+                                          "precondition (e.g. locks).",
+                                          ap_escape_html(r->pool, r->uri)),
+                                          err);
+        return dav_handle_err(r, err, multi_status);
+    }
+
     if (dav_get_resource_state(r, resource) == DAV_RESOURCE_NULL) {
         /* Apache will supply a default error for this. */
         return HTTP_NOT_FOUND;
