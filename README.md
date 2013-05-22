@@ -1,6 +1,6 @@
 ## Notes
 
-A version of Apache 2.4.4 with some important fixes for OmniPresence.
+A version of Apache 2.4.4 with some fixes we've submitted.
 
 The `vendor` branch is stock Apache source, with `master` containing our fixes.
 
